@@ -1,0 +1,35 @@
+<html>
+<head></head>
+<body>
+
+    <canvas id="cnvs" width="400" height="400"></canvas>
+    <script>
+
+        var context = document.getElementById("cnvs").getContext("2d");
+
+
+
+        context.translate(200, 200);
+        context.rotate( (Math.PI / 10) );
+        context.strokeRect(0, 0, 358, 358);
+        context.strokeRect(20, 20, 50, 50);
+
+        context.beginPath();
+
+        for(var i = 0; i < 5; i++) {
+
+            context.lineTo(0, 70);
+            context.translate(0, 70);
+            context.rotate(Math.PI * 2 / 10);
+
+            context.lineTo(0, -70);
+            context.translate(0, -70);
+            context.rotate( -(Math.PI * 6 / 10) );
+        }
+
+        context.closePath();
+        context.stroke();
+
+    </script>
+</body>
+</html>

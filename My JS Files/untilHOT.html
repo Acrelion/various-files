@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Days until HOT</title>
+	</head>
+    <!-- I've tried to use a custom font in the canvas which is downloaded by the browser but to no avail. -->
+    <style>
+        body {
+            background-color: lightslategrey;
+        }
+    </style>
+	<body>
+
+        <div style="display:flex;justify-content:center;align-items:center;">
+            <canvas id="myCanvas" width="585" height="300" style="position: absolute; top: 30%; left: 37%; margin-top: -50px;">
+                Your browser may not support canvas.
+            </canvas>
+        </div>
+
+
+        <script>
+			var mainModule = (function() {
+				
+				/** This function calculates the remaining time until 23 october 23:00h in days*/
+				function calculateDays() {
+					var oneDay, today, expansion, difference, days, message;
+
+                    // Because we have the Date in milliseconds we need to convert it (divide it)
+                    // to human readable form - we divide by the milliseconds, then seconds, then minutes and hours.
+					oneDay = 1000 * 60 * 60 * 24;
+
+                    // Get the current date and the date of the expansion. The ETA is roughly estimated.
+					today = new Date().getTime();
+					expansion = new Date(2015, 9, 23, 23, 0, 0).getTime();
+
+                    // The difference is in milliseconds, so we need to convert it to days.
+					difference = expansion - today;
+					days = difference / oneDay;
+
+                    // Check if the expansion is already out, i.e. we have passed the date of release.
+                    if (days < 0) {
+                        message = "Game time!";
+                    }
+                    else {
+                        message = Math.round(days) + " DAYS UNTIL EXPANSION!";
+                    }
+
+					return message;																	
+				}
+
+                /** This function selects the canvas element, then draws on it an image and text.*/
+				function drawToCanvas() {
+					var canvas, context, myGradient, img, msg;
+
+                    // Select the canvas, get the context, set the composition so the text is positioned above
+                    // the image.
+					canvas = document.getElementById("myCanvas");
+					context = canvas.getContext("2d");
+                    context.globalCompositeOperation="destination-over";
+					context.font = "30px Times New Roman";
+
+                    // Creating a gradient for the message. Then set the fill style to it.
+                    myGradient = context.createLinearGradient(0, 250, 0, 300);
+                    myGradient.addColorStop(0.2, "white");
+                    myGradient.addColorStop(0.6, "gray");
+                    myGradient.addColorStop(0.7, "black");
+                    context.fillStyle = myGradient;
+
+                    // Create a new image. The source is URL.
+					img = new Image();
+					img.src = "http://news.saraptor.com/wp-content/uploads/2015/06/gw2_heart-585x300.jpg";
+
+                    // Get the difference between the dates.
+					msg = calculateDays();
+
+                    //When the image is loaded, draw it and the text to the canvas.
+					img.onload = function() {
+                        context.fillText(msg, 90, 280);
+						context.drawImage(img, 0, 0);
+
+					};
+				}
+				drawToCanvas();
+				
+			});
+
+            window.onload = mainModule();
+		</script>
+
+	</body>	
+</html>

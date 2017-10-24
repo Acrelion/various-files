@@ -1,0 +1,96 @@
+<html>
+	<head>
+		<title>Round clock</title>
+		
+		<link rel="stylesheet" type="text/css" href="round_style.css"></link>
+		<script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+	</head>
+	<body>
+	
+	<div class="sun">
+		<div class="dot"></div>
+	</div>
+
+	<div id="frame"></div>
+		
+	
+	
+	
+	
+	<script>
+	$(document).ready(function(){
+		var sun = $(".sun");
+	
+		function getProperty(element, prop){
+			return element.css('-webkit-animation-play-state');
+		}
+	
+		sun.click(function(){
+			if (getProperty(sun, 'paused') == 'paused') {
+				sun.css('-webkit-animation-play-state','running');
+			
+				setTimeout( function(){
+					sun.css('-webkit-animation-play-state','paused');
+				},1000);
+			}
+		
+			if (getProperty(sun, 'paused') == 'paused' ){
+				sun.css('-moz-animation-play-state','running');
+			
+				setTimeout( function(){
+					sun.css('-moz-animation-play-state','paused');
+				},1000);
+			}
+		
+		});
+	});
+	
+	
+	</script>
+	
+	
+	<!--<script>
+
+	var radius = 200;
+	
+	var angle = 3 * Math.PI / 180;
+	var cx = window.innerWidth;
+	var cy = window.innerHeight;
+	var radius = 100;
+	
+	var minute = document.getElementById("minute");
+	
+	window.requestAnimFrame = (function (callback) {
+		return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || 
+			function (callback) {
+				window.setTimeout(callback, 1000 / 60);
+			};
+	})();
+
+	var fps = 60;
+	
+	function animate() {
+		setTimeout(function () {
+			requestAnimationFrame(animate);
+
+        // increase the angle of rotation
+        angle += 3 * Math.PI / 180;
+
+        // calculate the new ball.x / ball.y
+        var newX = cx + radius * Math.cos(angle);
+        var newY = cy + radius * Math.sin(angle);
+		
+		
+		minute.style.top = newX.toString() + 'px';
+		minute.style.left = newY.toString() + 'px';
+		
+	    }, 1000 / fps);
+	}
+
+	animate();	
+	
+	</script>-->
+	
+	</body>
+	
+</html>

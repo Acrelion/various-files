@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+function main(){
+	var currentDigit = -1;
+
+	function convert(digit, isHour) {
+		if (digit >= 13 && isHour) {
+			switch(digit){
+				case 13: return "one"; break;
+				case 14: return "two"; break;
+				case 15: return "three"; break;
+				case 16: return "four"; break;
+				case 17: return "five"; break;
+				case 18: return "six"; break;
+				case 19: return "seven"; break;
+				case 20: return "eight"; break;
+				case 21: return "nice"; break;
+				case 22: return "ten"; break;
+				case 23: return "eleven"; break;
+				default: break;
+			}
+		}
+		if (digit <= 13) {
+			switch (digit){
+				case 0: return isHour ? "zero" : "o'clock"; break;
+				case 1: return "one"; break;
+				case 2: return "two"; break;
+				case 3: return "three"; break;
+				case 4: return "four"; break;
+				case 5: return "five"; break;
+				case 6: return "six"; break;
+				case 7: return "seven"; break;
+				case 8: return "eight"; break;
+				case 9: return "nine"; break;
+				case 10: return "ten"; break;
+				case 11: return "eleven"; break;
+				case 12: return "twelve"; break;
+				case 13: return "thirteen"; break;
+				default: return digit; break;
+			}
+		}
+		else if (digit > 13 && digit < 20) {
+			if (digit === 15){return "fifteen";}
+			else if (digit === 18) { return "eighteen";}
+			var second = digit - 10;
+			return convert(second) + "teen";
+		}
+		else {
+		   switch (digit) {
+			   case 20: return "twenty"; break;
+			   case 30: return "thirty"; break;
+			   case 40: return "fourty"; break;
+			   case 50: return "fifty"; break;
+			   default: 
+				   var firstPart = parseInt(digit / 10) * 10;
+				   var secondPart = digit % 10;
+				   var result = convert(firstPart) + " " + convert(secondPart);
+				   return result; 
+			   break;
+		   }
+		}        
+	}
+
+	function startTime() {
+		var t;
+		var today = new Date();
+		var h = today.getHours();
+		var m = today.getMinutes();
+		
+		var timeDiv = document.getElementById("txt");
+		
+		timeDiv.innerHTML =
+		"It is "+ "<b>" + convert(h, true) + "</b>" + " " + convert(m, false) + ".";
+		
+		var divHeight = timeDiv.clientHeight;
+		var divWidth = timeDiv.clientWidth;
+		
+		
+		var width = window.innerWidth;
+		var height = window.innerHeight;
+		var posx = ( Math.random() * (width - divWidth) ).toFixed();
+		var posy = ( Math.random() * (height - divHeight) ).toFixed();
+		
+		timeDiv.style.position = "absolute";
+		timeDiv.style.left = posx + "px";
+		timeDiv.style.top = posy + "px";
+		
+		
+
+		t = setTimeout(startTime, 20000);
+	
+		
+	}
+
+
+startTime();	
+}
+</script>
+</head>
+
+<body onload="main()" style="background-color: black;">
+
+
+<div id="txt" style="font-size: 34px; font-family: Century Gothic; color: white;"></div>
+
+</body>
+</html>
