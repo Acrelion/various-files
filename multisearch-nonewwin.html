@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+
+<body>
+
+    <p>What French word would you like to multisearch? Type below, then press enter please.</p>
+    <input type="text" id="boxu" autofocus>
+
+    <script>
+        var windows = {
+            "window1": null,
+            "window2": null,
+            "window3": null,
+            "window4": null,
+        };
+
+        document.getElementById("boxu").onkeydown = function (e) {
+            searchy(e)
+        };
+
+
+        function searchy(e) {
+            if (e.which == 13) {
+                var q = document.getElementById("boxu").value;
+                var links = {
+                    "window1": "http://translate.google.com/translate?hl=en&sl=fr&tl=en&u=http%3A%2F%2Fwww.google.fr%2Fsearch%3Fq%3D" +
+                        q + "%26num%3D10%26hl%3Dfr%26site%3Dimghp%26tbm%3Disch%26sout%3D1%26biw%3D1242%26bih%3D640",
+
+                    "window2": "http://fr.forvo.com/word/" + q + "/#fr",
+
+                    "window3": "http://www.linguee.com/english-french/search?source=french&query=" + q,
+
+                    "window4": "http://translate.google.com/translate?sl=fr&tl=en&prev=_t&hl=en&ie=UTF-8&eotf=1&u=http://fr.wiktionary.org/wiki/" +
+                        q + "&act=url"
+
+                };
+                for (var win in windows) {
+                    if (windows.hasOwnProperty(win) && links.hasOwnProperty(win)) {
+                        if (windows[win] === null || windows[win].closed || windows[win].location === undefined) {
+                            var windowOpened = window.open(links[win]);
+                            windows[win] = windowOpened;
+                        }
+                        else {
+                            if (windows[win]){
+                                windows[win].location.href = links[win];
+                            }
+                        }
+                    }
+                }
+                
+                document.getElementById("boxu").value = "";
+            }
+        }
+    </script>
+    <!--
+         Original script is taken from https://fluent-forever.com/wp-content/uploads/2016/01/french_multisearch.html
+         Modified by Ivan Ivanov, Bulgaria, 16.11.2017
+    -->
+</body>
+</html>
